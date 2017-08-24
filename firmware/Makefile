@@ -1,10 +1,10 @@
 OUTPUT_NAME = fw
-OBJECTS = main.o
+OBJECTS = main.o gpio.o
 
 MCU=atxmega32e5
 
 CROSS ?= avr-
-CFLAGS := -std=c11 -Wall -Wextra -Werror -O2 -g -mmcu=${MCU} ${CFLAGS}
+CFLAGS := -std=c11 -Wall -Wextra -Werror -O2 -flto -g -mmcu=${MCU} ${CFLAGS}
 
 CC = ${CROSS}gcc
 OBJDUMP = ${CROSS}objdump
@@ -19,7 +19,7 @@ clean:
 	${RM} -f ${OBJECTS}
 
 ${OUTPUT_NAME}.elf: ${OBJECTS}
-	${CC} ${CFLAGS} -o $@ $<
+	${CC} ${CFLAGS} -o $@ $^
 
 %.disas: %.elf
 	${OBJDUMP} -S $< > $@
