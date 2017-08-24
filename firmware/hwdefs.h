@@ -4,7 +4,7 @@
 /* This file contains a simple set of definitions extracted from the schematic.
  * No copyright is claimed as it's just a list of facts; however, if you must
  * treat it as being under copyright and having a license, you can use either
- * the license in LICENSE-hw (CC-BY-SA 4.0) or the license in LICENSE-fw (GPL 2)
+ * the license in LICENSE-hw (CC-BY-SA 4.0) or the license in LICENSE-fw (MIT)
  * as you prefer.
  */
 
