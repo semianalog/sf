@@ -13,6 +13,7 @@ SIZE = ${CROSS}size
 .PHONY: all clean
 
 all: ${OUTPUT_NAME}.elf ${OUTPUT_NAME}.disas
+	${SIZE} $<
 
 clean:
 	${RM} -f ${OUTPUT_NAME}.elf ${OUTPUT_NAME}.disas
