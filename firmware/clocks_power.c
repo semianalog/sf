@@ -18,3 +18,10 @@ void start_fast_clock(void)
     // No need for any other clocks
     OSC.CTRL = en;
 }
+
+void enter_sleep(void)
+{
+    // TODO: Bias amplifier down and disable DAC
+    // TODO: Disable charge pump, audio output, FET drive
+    // TODO: Power down amplifier, volume pot, all LEDs
+}

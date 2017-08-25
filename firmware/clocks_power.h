@@ -5,4 +5,7 @@
 /// and select it.
 void start_fast_clock(void);
 
+/// Enter sleep mode, disabling internal and external peripherals as necessary.
+void enter_sleep(void);
+
 #endif // CLOCKS_POWER_H
