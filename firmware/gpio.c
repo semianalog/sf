@@ -10,6 +10,12 @@ static inline uint8_t volatile *pinctrl_for_pin(PORT_t *port, uint8_t pin);
 
 void init_pins(void)
 {
+    PORTCFG.SRLCTRL =
+        PORTCFG_SRLENRA_bm |
+        PORTCFG_SRLENRC_bm |
+        PORTCFG_SRLENRD_bm |
+        PORTCFG_SRLENRR_bm;
+
     init_pins_out();
     init_pins_dir();
     init_pins_ctrl();
