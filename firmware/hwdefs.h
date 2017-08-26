@@ -58,4 +58,46 @@ X(PR1,          3,  1,  false,  false,  PORT_OPC_PULLUP_gc) /* unused */ \
 #define PORTC_REMAP_VAL (PORT_TC4C_bm)
 #define PORTD_REMAP_VAL (PORT_USART0_bm)
 
+/******************************************************************************
+ * ANALOG DEFINITIONS
+ */
+
+// Inductance of the current source buck converter, H
+#define DRIVE_FILTER_H              (100e-6)
+
+// Resistance of the current source sense resistor, ohms
+#define CURRENT_SENSE_R             (1.0)
+
+// Maximum Vf of clamping diode at 1A, volts
+#define CLAMP_DIODE_VF              (0.5)
+
+// Gain of amplifier stage 1, gain switch off, dB
+#define AMP_GAIN_1_DB               (39.3)
+
+// Gain of both amplifier stages together, gain switch off, dB
+#define AMP_GAIN_2_DB               (78.5)
+
+// Gain of amplifier stage 1, gain switch on, dB
+#define AMP_GAIN_1_LO_DB            (19.4)
+
+// Gain of both amplifier stages together, gain switch on, dB
+#define AMP_GAIN_2_LO_DB            (58.6)
+
+// BEWARE: Enabling the low-gain switch widens the bandwidth, from
+// f_ch = 10.2 kHz to f_ch = 112 kHz.
+
+// Center frequency of amplifier, Hz
+#define AMP_FC_HZ                   (1.775e3)
+
+// Proper frontend bias voltage, V. Use this as base for "BIAS" DAC output
+#define FRONTEND_BIAS_V             (1.5)
+
+// Nominal VCC. This is unregulated, so when accuracy is needed, measure
+// with ADC.
+#define VCC_V                       (3.0)
+
+// Capacitance in the frontend supply charge pump, F. Same capacitance is used
+// for drive coupling as for output filtering.
+#define CHARGE_PUMP_CAP_F           (2.2e-6)
+
 #endif // HWDEFS_H
