@@ -4,8 +4,6 @@
 static inline void init_pins_out(void);
 static inline void init_pins_dir(void);
 static inline void init_pins_ctrl(void);
-static inline PORT_t *port_for_index(uint8_t port);
-static inline VPORT_t *vport_for_index(uint8_t port);
 static inline uint8_t volatile *pinctrl_for_pin(PORT_t *port, uint8_t pin);
 
 void init_pins(void)
@@ -17,8 +15,8 @@ void init_pins(void)
         PORTCFG_SRLENRR_bm;
 
     init_pins_out();
-    init_pins_dir();
     init_pins_ctrl();
+    init_pins_dir();
 
     PORTC.REMAP = PORTC_REMAP_VAL;
     PORTD.REMAP = PORTD_REMAP_VAL;
@@ -62,10 +60,10 @@ static inline void init_pins_dir(void)
     PIN_TABLE ;
 #undef X
 
-    if (dirs[0]) VPORT0.OUT = dirs[0];
-    if (dirs[1]) VPORT1.OUT = dirs[1];
-    if (dirs[2]) VPORT2.OUT = dirs[2];
-    if (dirs[3]) VPORT3.OUT = dirs[3];
+    if (dirs[0]) VPORT0.DIR = dirs[0];
+    if (dirs[1]) VPORT1.DIR = dirs[1];
+    if (dirs[2]) VPORT2.DIR = dirs[2];
+    if (dirs[3]) VPORT3.DIR = dirs[3];
 }
 
 static inline void init_pins_ctrl(void)
@@ -78,7 +76,7 @@ static inline void init_pins_ctrl(void)
 #undef X
 }
 
-static inline PORT_t *port_for_index(uint8_t port)
+PORT_t *port_for_index(uint8_t port)
 {
     switch (port) {
     case 0: return &PORTA;
@@ -89,7 +87,7 @@ static inline PORT_t *port_for_index(uint8_t port)
     }
 }
 
-static inline VPORT_t *vport_for_index(uint8_t port)
+VPORT_t *vport_for_index(uint8_t port)
 {
     switch (port) {
     case 0: return &VPORT0;

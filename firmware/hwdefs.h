@@ -44,7 +44,7 @@ X(SW_RANGE,     2,  0,  false,  false,  PORT_OPC_PULLUP_gc | PORT_INVEN_bm) \
 X(SW_OFF,       2,  1,  false,  false,  PORT_OPC_PULLUP_gc | PORT_INVEN_bm) \
 X(VOLUME,       2,  2,  false,  false,  PORT_ISC_INPUT_DISABLE_gc) /* ADC: 10 */ \
 X(POT_EN,       2,  3,  true,   false,  PORT_OPC_TOTEM_gc) \
-X(DRIVE,        2,  4,  true,   false,  PORT_OPC_TOTEM_gc) /* OC5A */ \
+X(DRIVE,        2,  4,  true,   false,  PORT_OPC_TOTEM_gc | PORT_INVEN_bm) /* OC5A */ \
 X(ISENSE_PASS,  2,  5,  false,  false,  PORT_ISC_INPUT_DISABLE_gc) \
 X(RX,           2,  6,  false,  false,  PORT_OPC_PULLUP_gc) /* USART */ \
 X(TX,           2,  7,  true,   true,   PORT_OPC_TOTEM_gc) /* USART */ \
