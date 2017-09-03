@@ -10,8 +10,8 @@ int main(void)
 
     init_pins();
     WRITE_PIN(IND_1A, 1);
-    enter_run();
     set_charge_pump_dc(true);
+    enter_run();
     sei();
 
     for (;;) {

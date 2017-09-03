@@ -19,4 +19,13 @@ void enter_run(void);
 /// Start timers
 void start_timers(void);
 
+/// Stop timers
+void stop_timers(void);
+
+/// Enable DAC output
+void start_dac(void);
+
+/// Disable DAC output
+void stop_dac(void);
+
 #endif // CLOCKS_POWER_H

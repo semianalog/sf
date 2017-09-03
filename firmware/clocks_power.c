@@ -39,6 +39,8 @@ void enter_sleep(void)
 {
     // TODO: Bias amplifier down and disable DAC
     // TODO: Disable charge pump, audio output, FET drive
+    stop_dac();
+    stop_timers();
     set_charge_pump_dc(false);
     WRITE_PIN(DRIVE, 0);
 
@@ -66,6 +68,7 @@ void enter_run(void)
     PR.PRPD = PR_TWI_bm | PR_SPI_bm | PR_HIRES_bm;
 
     start_timers();
+    start_dac();
 }
 
 void start_timers(void)
@@ -79,4 +82,23 @@ void start_timers(void)
     TCC4.CCB = per / 2;
     TCC4.CCC = per / 2;
     TCC4.CTRLA = TC45_CLKSEL_DIV1_gc;
+}
+
+void stop_timers(void)
+{
+    TCC4.CTRLE = 0;
+    TCC4.CTRLA = 0;
+}
+
+void start_dac(void)
+{
+    DACA.CTRLB = DAC_CHSEL_SINGLE1_gc;
+    DACA.CTRLC = DAC_REFSEL_AVCC_gc;
+    DACA.CTRLA = DAC_CH1EN_bm | DAC_LPMODE_bm | DAC_ENABLE_bm;
+    DACA.CH1DATA = 0x7ff;
+}
+
+void stop_dac(void)
+{
+    DACA.CTRLA = 0;
 }
