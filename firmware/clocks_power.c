@@ -64,4 +64,19 @@ void enter_run(void)
     PR.PRGEN = PR_XCL_bm | PR_RTC_bm;
     PR.PRPC = PR_TWI_bm | PR_USART0_bm | PR_SPI_bm | PR_HIRES_bm;
     PR.PRPD = PR_TWI_bm | PR_SPI_bm | PR_HIRES_bm;
+
+    start_timers();
+}
+
+void start_timers(void)
+{
+    // TCC4: audio output and charge pump drive
+    TCC4.CTRLB = TC45_WGMODE_SINGLESLOPE_gc;
+    TCC4.CTRLE = TC45_CCAMODE_COMP_gc | TC45_CCBMODE_COMP_gc | TC45_CCCMODE_COMP_gc;
+    uint16_t const per = F_CPU / 100000uLL; // 100kHz
+    TCC4.PER = per;
+    TCC4.CCA = per / 2;
+    TCC4.CCB = per / 2;
+    TCC4.CCC = per / 2;
+    TCC4.CTRLA = TC45_CLKSEL_DIV1_gc;
 }

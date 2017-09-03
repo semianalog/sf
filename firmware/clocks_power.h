@@ -16,4 +16,7 @@ void enter_sleep(void);
 /// Enter run mode, initializing power management as necessary.
 void enter_run(void);
 
+/// Start timers
+void start_timers(void);
+
 #endif // CLOCKS_POWER_H
