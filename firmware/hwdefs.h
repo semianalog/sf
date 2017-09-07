@@ -40,8 +40,8 @@ X(BOOST_IN_2,   1,  4,  true,   false,  PORT_OPC_TOTEM_gc) \
 X(BOOST_IN_3,   1,  5,  true,   false,  PORT_OPC_TOTEM_gc) \
 X(BOOST_SW,     1,  6,  true,   false,  PORT_OPC_TOTEM_gc) /* OC4C */ \
 X(GAIN,         1,  7,  true,   false,  PORT_OPC_TOTEM_gc) \
-X(SW_RANGE,     2,  0,  false,  false,  PORT_OPC_PULLUP_gc | PORT_INVEN_bm) \
-X(SW_OFF,       2,  1,  false,  false,  PORT_OPC_PULLUP_gc | PORT_INVEN_bm) \
+X(SW_RANGE,     2,  0,  false,  false,  PORT_OPC_PULLUP_gc | PORT_ISC_LEVEL_gc) \
+X(SW_OFF,       2,  1,  false,  false,  PORT_OPC_PULLUP_gc) \
 X(VOLUME,       2,  2,  false,  false,  PORT_ISC_INPUT_DISABLE_gc) /* ADC: 10 */ \
 X(POT_EN,       2,  3,  true,   false,  PORT_OPC_TOTEM_gc) \
 X(DRIVE,        2,  4,  true,   false,  PORT_OPC_TOTEM_gc | PORT_INVEN_bm) /* OC5A */ \

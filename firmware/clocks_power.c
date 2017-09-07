@@ -3,6 +3,7 @@
 #include <avr/io.h>
 #include <avr/xmega.h>
 #include <avr/sleep.h>
+#include <avr/interrupt.h>
 
 void start_fast_clock(void)
 {
@@ -55,10 +56,20 @@ void enter_sleep(void)
     PR.PRPC = PR_TWI_bm | PR_USART0_bm | PR_SPI_bm | PR_HIRES_bm | PR_TC5_bm | PR_TC4_bm;
     PR.PRPD = PR_TWI_bm | PR_USART0_bm | PR_SPI_bm | PR_HIRES_bm | PR_TC5_bm | PR_TC4_bm;
 
+    // Enable the pin change interrupt on the ON switch
+    PORT_FOR_PIN(SW_RANGE)->INTMASK = 1 << SW_RANGE_PIN;
+    PORT_FOR_PIN(SW_RANGE)->INTCTRL = PORT_INTLVL_HI_gc;
+
     set_sleep_mode(SLEEP_SMODE_PDOWN_gc);
     sleep_enable();
     sleep_cpu();
     for (;;);
+}
+
+ISR(PORTD_INT_vect)
+{
+    _PROTECTED_WRITE(RST.CTRL, RST_SWRST_bm);
+    for(;;);
 }
 
 void enter_run(void)

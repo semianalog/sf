@@ -13,9 +13,10 @@ int main(void)
     set_charge_pump_dc(true);
     enter_run();
     sei();
+    PMIC.CTRL = PMIC_HILVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_LOLVLEN_bm;
 
     for (;;) {
-        if (READ_PIN(SW_OFF)) {
+        if (!READ_PIN(SW_OFF)) {
             enter_sleep();
         }
     }
