@@ -20,6 +20,8 @@ void start_fast_clock(void)
 
     // No need for any other clocks
     OSC.CTRL = en;
+
+    _PROTECTED_WRITE(CLK.PSCTRL, CLK_PSADIV_1_gc | CLK_PSBCDIV_4_1_gc);
 }
 
 void set_charge_pump_dc(bool run)
