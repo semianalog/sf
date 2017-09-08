@@ -65,6 +65,7 @@ void enter_sleep(void)
     set_sleep_mode(SLEEP_SMODE_PDOWN_gc);
     sleep_enable();
     sleep_cpu();
+
     for (;;);
 }
 
