@@ -40,14 +40,6 @@ int main(void)
 
     struct button_state state = { true, false, 0 };
 
-    // Initialize timer for audio sampling
-    TCC5.CTRLB = TC45_WGMODE_NORMAL_gc;
-    TCC5.CTRLE = 0;
-    TCC5.PER = (F_CPU / (220uLL * 16uLL));
-    TCC5.INTCTRLA = TC45_OVFINTLVL_MED_gc;
-    TCC5.CTRLA = TC45_CLKSEL_DIV1_gc;
-    TCC5.INTFLAGS = TC5_OVFIF_bm;
-
     for (;;) {
         button_cycle(&state);
 

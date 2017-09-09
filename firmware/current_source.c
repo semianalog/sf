@@ -36,15 +36,15 @@ void set_current_range(enum current_ranges range)
 
     switch (range) {
     case RANGE_1A:
-        TCD5.CCA = 650;
+        TCD5.CCA = 4*650;
         WRITE_PIN(IND_1A, true);
         break;
     case RANGE_100MA:
-        TCD5.CCA = 65;
+        TCD5.CCA = 4*65;
         WRITE_PIN(IND_100mA, true);
         break;
     case RANGE_20MA:
-        TCD5.CCA = 13;
+        TCD5.CCA = 4*13;
         WRITE_PIN(IND_20mA, true);
         break;
     default:
