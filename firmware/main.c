@@ -6,6 +6,7 @@
 #include "clocks_power.h"
 #include "current_source.h"
 #include "audio.h"
+#include "adc.h"
 
 struct button_state {
     bool button_state_hold;
@@ -35,13 +36,23 @@ int main(void)
 
     WRITE_PIN(IND_20mA, 1);
     set_charge_pump_dc(true);
-    init_audio();
     enter_run();
+    init_audio();
+    init_adc();
+    WRITE_PIN(POT_EN, true);
+    select_pot();
 
     struct button_state state = { true, false, 0 };
 
     for (;;) {
         button_cycle(&state);
+
+        int16_t volpot = adc_convert();
+        if (volpot >= 0) {
+            set_audio_volume(volpot / 128);
+        }
+
+        _delay_ms(50);
 
         if (!READ_PIN(SW_OFF)) {
             enter_sleep();

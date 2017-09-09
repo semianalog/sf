@@ -1,5 +1,5 @@
 OUTPUT_NAME = fw
-OBJECTS = main.o gpio.o clocks_power.o current_source.o audio.o
+OBJECTS = main.o gpio.o clocks_power.o current_source.o audio.o adc.o
 
 MCU=atxmega32e5
 

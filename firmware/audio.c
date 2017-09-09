@@ -39,7 +39,7 @@ void set_audio_freq(uint16_t freq)
 
 void set_audio_volume(uint8_t vol)
 {
-    TMR_AUDIO_SAMPLE.CTRLGSET = TC5_STOP_bm;
+    //TMR_AUDIO_SAMPLE.CTRLGSET = TC5_STOP_bm;
 
     for (uint8_t i = 0; i < sizeof(SINE_TABLE); ++i) {
         int16_t datapoint = SINE_TABLE[i];
@@ -55,7 +55,7 @@ void set_audio_volume(uint8_t vol)
         }
     }
 
-    TMR_AUDIO_SAMPLE.CTRLGCLR = TC5_STOP_bm;
+    //TMR_AUDIO_SAMPLE.CTRLGCLR = TC5_STOP_bm;
 }
 
 ISR(VECT_AUDIO_SAMPLE)
