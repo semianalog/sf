@@ -38,12 +38,36 @@ int main(void)
 
     struct button_state state = { true, false, 0 };
 
+    // Temporary: signal for audio output
+    const int8_t sig[] = {
+        -120, -100, -80, -60, -40, -20, 0,
+        20, 40, 60, 80, 100, 120,
+        100, 80, 60, 40, 20,
+        0, -20, -40, -60, -80, -100 };
+    uint8_t i = 0;
+
     for (;;) {
         button_cycle(&state);
 
         if (!READ_PIN(SW_OFF)) {
             enter_sleep();
         }
+
+        uint8_t cca, ccb;
+        if (sig[i] >= 0) {
+            cca = 0;
+            ccb = ((uint8_t) sig[i]);
+        } else {
+            cca = ((uint8_t) -sig[i]);
+            ccb = 0;
+        }
+
+        i = (i + 1) % sizeof(sig);
+
+        TCC4.CCA = cca;
+        TCC4.CCB = ccb;
+
+        _delay_us(95);
     }
 
     return 0;
