@@ -4,7 +4,7 @@ OBJECTS = main.o gpio.o clocks_power.o current_source.o
 MCU=atxmega32e5
 
 CROSS ?= avr-
-CFLAGS := -std=gnu11 -Wall -Wextra -Werror -O2 -flto -g -mmcu=${MCU} -DF_CPU=8000000uLL ${CFLAGS}
+CFLAGS := -std=gnu11 -Wall -Wextra -Werror -O2 -flto -g -mmcu=${MCU} -DF_CPU=32000000uLL ${CFLAGS}
 
 CC = ${CROSS}gcc
 OBJDUMP = ${CROSS}objdump

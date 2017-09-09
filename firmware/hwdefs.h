@@ -11,6 +11,30 @@
  */
 
 /******************************************************************************
+ * PERIPHERAL MAPPING
+ *
+ * ANALOG
+ * ----------------------------------------------------------------------------
+ * ADC1, positive differential input: amplified probe signal
+ * ADC4, negative differential input: probe amplifier bias level
+ * ADC2, comparator input 2: current sense voltage
+ * ADC10: volume pot
+ * DAC1: probe amplifier bias level
+ *
+ * TIMERS
+ * ----------------------------------------------------------------------------
+ * TCC4:   (Fper/127 = 63kHz) audio output and charge pump
+ *   OC4A: audio output, polarity 1
+ *   OC4B: audio output, polarity 2
+ *   OC4C: charge pump
+ *
+ * TCC5:   (variable freq) audio output DMA timer
+ *
+ * TCD5:   (1775 Hz) current source drive and ADC synch
+ *   OC5A: high-side switch (IO inverted)
+ */
+
+/******************************************************************************
  * GPIO DEFINITIONS
  *
  * Ports A, C, D, R are numbered as 0, 1, 2, 3. This simplifies interfacing with

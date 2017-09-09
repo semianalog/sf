@@ -27,7 +27,7 @@ void write_pin(uint8_t port, uint8_t pin, bool val)
     if (val) {
         vport_for_index(port)->OUT |= (1 << pin);
     } else {
-        vport_for_index(port)->OUT &= (1 << pin);
+        vport_for_index(port)->OUT &= ~(1 << pin);
     }
 }
 

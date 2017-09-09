@@ -21,8 +21,6 @@ void start_fast_clock(void)
 
     // No need for any other clocks
     OSC.CTRL = en;
-
-    _PROTECTED_WRITE(CLK.PSCTRL, CLK_PSADIV_1_gc | CLK_PSBCDIV_4_1_gc);
 }
 
 void set_charge_pump_dc(bool run)
@@ -91,7 +89,7 @@ void start_timers(void)
     // TCC4: audio output and charge pump drive
     TCC4.CTRLB = TC45_WGMODE_SINGLESLOPE_gc;
     TCC4.CTRLE = TC45_CCAMODE_COMP_gc | TC45_CCBMODE_COMP_gc | TC45_CCCMODE_COMP_gc;
-    uint16_t const per = 127;   // 63kHz sample rate
+    uint16_t const per = 128;   // 252kHz sample rate
     TCC4.PER = per;
     TCC4.CCA = per / 2;
     TCC4.CCB = per / 2;

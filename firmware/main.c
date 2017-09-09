@@ -38,13 +38,13 @@ int main(void)
 
     struct button_state state = { true, false, 0 };
 
-    // Temporary: signal for audio output
-    const int8_t sig[] = {
-        -120, -100, -80, -60, -40, -20, 0,
-        20, 40, 60, 80, 100, 120,
-        100, 80, 60, 40, 20,
-        0, -20, -40, -60, -80, -100 };
-    uint8_t i = 0;
+    // Initialize timer for audio sampling
+    TCC5.CTRLB = TC45_WGMODE_NORMAL_gc;
+    TCC5.CTRLE = 0;
+    TCC5.PER = (F_CPU / (220uLL * 16uLL));
+    TCC5.INTCTRLA = TC45_OVFINTLVL_MED_gc;
+    TCC5.CTRLA = TC45_CLKSEL_DIV1_gc;
+    TCC5.INTFLAGS = TC5_OVFIF_bm;
 
     for (;;) {
         button_cycle(&state);
@@ -52,25 +52,36 @@ int main(void)
         if (!READ_PIN(SW_OFF)) {
             enter_sleep();
         }
-
-        uint8_t cca, ccb;
-        if (sig[i] >= 0) {
-            cca = 0;
-            ccb = ((uint8_t) sig[i]);
-        } else {
-            cca = ((uint8_t) -sig[i]);
-            ccb = 0;
-        }
-
-        i = (i + 1) % sizeof(sig);
-
-        TCC4.CCA = cca;
-        TCC4.CCB = ccb;
-
-        _delay_us(95);
     }
 
     return 0;
+}
+
+static uint8_t sig_cca[] = {
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 4.9, 9.0, 11.7, 12.7, 11.7, 9.0, 4.9 };
+static uint8_t sig_ccb[] = {
+    0, 4.9, 9.0, 11.7, 12.7, 11.7, 9.0, 4.9,
+    0, 0, 0, 0, 0, 0, 0, 0 };
+
+ISR(TCC5_OVF_vect)
+{
+    static uint8_t i = 0;
+
+    uint8_t cca = sig_cca[i];
+    uint8_t ccb = sig_ccb[i];
+
+    WRITE_PIN(POT_EN, true);
+    //TCC4.CTRLGSET = TC4_STOP_bm;
+    TCC4.CCA = cca;
+    TCC4.CCB = ccb;
+    //TCC4.CTRLGCLR = TC4_STOP_bm;
+    if (i == TC45_CMD_RESTART_gc)
+        TCC4.CTRLGSET = TC45_CMD_RESTART_gc;
+    WRITE_PIN(POT_EN, false);
+    TCC5.INTFLAGS = TC5_OVFIF_bm;
+
+    i = (i + 1) % 16;
 }
 
 static void button_cycle(struct button_state * state)

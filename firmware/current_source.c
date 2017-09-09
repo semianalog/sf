@@ -10,7 +10,7 @@ void start_current_source(void)
     TCD5.CTRLB = TC45_WGMODE_SINGLESLOPE_gc;
     TCD5.CTRLE = TC45_CCAMODE_COMP_gc;
 
-    uint16_t const per = F_CPU / 2500uLL; // 2.5kHz
+    uint16_t const per = F_CPU / 1775uLL; // 2.5kHz
     TCD5.PER = per;
     TCD5.CCA = 650;
     TCD5.CTRLA = TC45_CLKSEL_DIV1_gc;
