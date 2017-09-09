@@ -26,7 +26,7 @@ void init_audio(void)
     TMR_AUDIO_SAMPLE.INTCTRLA = TC45_OVFINTLVL_MED_gc;
 
     set_audio_freq(220);
-    set_audio_volume(10);
+    set_audio_volume(2);
     TMR_AUDIO_SAMPLE.CTRLA = TC45_CLKSEL_DIV1_gc;
     TMR_AUDIO_SAMPLE.INTFLAGS = TC5_OVFIF_bm;
 }
@@ -44,7 +44,7 @@ void set_audio_volume(uint8_t vol)
     for (uint8_t i = 0; i < sizeof(SINE_TABLE); ++i) {
         int16_t datapoint = SINE_TABLE[i];
         datapoint *= (int16_t) vol;
-        datapoint /= 256;
+        datapoint /= 128;
 
         if (datapoint >= 0) {
             samples_ph1[i] = 0;
@@ -68,7 +68,7 @@ ISR(VECT_AUDIO_SAMPLE)
     CC_AUDIO_PWM_1 = cca;
     CC_AUDIO_PWM_2 = ccb;
 
-    if (i == 0)
+    if (i == TC45_CMD_RESTART_gc)
         TMR_AUDIO_PWM.CTRLGSET = TC45_CMD_RESTART_gc;
 
     i = (i + 1) % sizeof(SINE_TABLE);
