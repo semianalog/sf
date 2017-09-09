@@ -1,4 +1,5 @@
 #include "clocks_power.h"
+#include "current_source.h"
 #include "gpio.h"
 #include <avr/io.h>
 #include <avr/xmega.h>
@@ -45,7 +46,7 @@ void enter_sleep(void)
     stop_dac();
     stop_timers();
     set_charge_pump_dc(false);
-    WRITE_PIN(DRIVE, 0);
+    stop_current_source();
 
     // TODO: Power down amplifier, volume pot, all LEDs
     WRITE_PIN(POT_EN, 0);
