@@ -34,6 +34,14 @@
  *   OC5A: high-side switch (IO inverted)
  */
 
+#define TMR_AUDIO_PWM       TCC4
+#define CC_AUDIO_PWM_1      TCC4.CCA
+#define CC_AUDIO_PWM_2      TCC4.CCB
+#define CC_CHARGEPUMP       TCC4.CCC
+#define TMR_AUDIO_PWM_CTRLE (TC45_CCAMODE_COMP_gc | TC45_CCBMODE_COMP_gc | TC45_CCCMODE_COMP_gc)
+#define TMR_AUDIO_SAMPLE    TCC5
+#define VECT_AUDIO_SAMPLE   TCC5_OVF_vect
+
 /******************************************************************************
  * GPIO DEFINITIONS
  *

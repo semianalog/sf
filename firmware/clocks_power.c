@@ -80,27 +80,17 @@ void enter_run(void)
     PR.PRPC = PR_TWI_bm | PR_USART0_bm | PR_SPI_bm | PR_HIRES_bm;
     PR.PRPD = PR_TWI_bm | PR_SPI_bm | PR_HIRES_bm;
 
-    start_timers();
     start_dac();
-}
-
-void start_timers(void)
-{
-    // TCC4: audio output and charge pump drive
-    TCC4.CTRLB = TC45_WGMODE_SINGLESLOPE_gc;
-    TCC4.CTRLE = TC45_CCAMODE_COMP_gc | TC45_CCBMODE_COMP_gc | TC45_CCCMODE_COMP_gc;
-    uint16_t const per = 128;   // 252kHz sample rate
-    TCC4.PER = per;
-    TCC4.CCA = per / 2;
-    TCC4.CCB = per / 2;
-    TCC4.CCC = per / 2;
-    TCC4.CTRLA = TC45_CLKSEL_DIV1_gc;
 }
 
 void stop_timers(void)
 {
+    TCC5.CTRLE = 0;
+    TCC5.CTRLA = 0;
     TCC4.CTRLE = 0;
     TCC4.CTRLA = 0;
+    TCD5.CTRLE = 0;
+    TCD5.CTRLA = 0;
 }
 
 void start_dac(void)

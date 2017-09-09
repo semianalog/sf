@@ -5,6 +5,7 @@
 #include "gpio.h"
 #include "clocks_power.h"
 #include "current_source.h"
+#include "audio.h"
 
 struct button_state {
     bool button_state_hold;
@@ -34,6 +35,7 @@ int main(void)
 
     WRITE_PIN(IND_20mA, 1);
     set_charge_pump_dc(true);
+    init_audio();
     enter_run();
 
     struct button_state state = { true, false, 0 };
@@ -55,33 +57,6 @@ int main(void)
     }
 
     return 0;
-}
-
-static uint8_t sig_cca[] = {
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 4.9, 9.0, 11.7, 12.7, 11.7, 9.0, 4.9 };
-static uint8_t sig_ccb[] = {
-    0, 4.9, 9.0, 11.7, 12.7, 11.7, 9.0, 4.9,
-    0, 0, 0, 0, 0, 0, 0, 0 };
-
-ISR(TCC5_OVF_vect)
-{
-    static uint8_t i = 0;
-
-    uint8_t cca = sig_cca[i];
-    uint8_t ccb = sig_ccb[i];
-
-    WRITE_PIN(POT_EN, true);
-    //TCC4.CTRLGSET = TC4_STOP_bm;
-    TCC4.CCA = cca;
-    TCC4.CCB = ccb;
-    //TCC4.CTRLGCLR = TC4_STOP_bm;
-    if (i == TC45_CMD_RESTART_gc)
-        TCC4.CTRLGSET = TC45_CMD_RESTART_gc;
-    WRITE_PIN(POT_EN, false);
-    TCC5.INTFLAGS = TC5_OVFIF_bm;
-
-    i = (i + 1) % 16;
 }
 
 static void button_cycle(struct button_state * state)
