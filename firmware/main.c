@@ -49,7 +49,7 @@ int main(void)
 
         int16_t volpot = adc_convert();
         if (volpot >= 0) {
-            set_audio_volume(volpot / 128);
+            set_audio_volume(volpot / 256);
         }
 
         _delay_ms(50);
@@ -64,7 +64,7 @@ int main(void)
 
 static void button_cycle(struct button_state * state)
 {
-    const uint16_t debounce_top = 25000u;
+    const uint16_t debounce_top = 2u;
     bool button = READ_PIN(SW_RANGE);
 
     if (state->pre_act) {

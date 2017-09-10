@@ -17,10 +17,13 @@ void start_fast_clock(void)
     OSC.DFLLCTRL = OSC_RC32MCREF_RC32K_gc;
     DFLLRC32M.CTRL = DFLL_ENABLE_bm;
 
-    _PROTECTED_WRITE(CLK.CTRL, CLK_SCLKSEL_RC32M_gc);
+    OSC.PLLCTRL = OSC_PLLSRC_RC32M_gc /* div 4 */ | 16;
+    OSC.CTRL |= OSC_PLLEN_bm;
 
-    // No need for any other clocks
-    OSC.CTRL = en;
+    while (!(OSC.STATUS & OSC_PLLRDY_bm));
+
+    _PROTECTED_WRITE(CLK.PSCTRL, CLK_PSADIV_1_gc | CLK_PSBCDIV_2_2_gc);
+    _PROTECTED_WRITE(CLK.CTRL, CLK_SCLKSEL_PLL_gc);
 }
 
 void set_charge_pump_dc(bool run)
@@ -77,7 +80,7 @@ ISR(PORTD_INT_vect)
 void enter_run(void)
 {
     PR.PRGEN = PR_XCL_bm | PR_RTC_bm;
-    PR.PRPC = PR_TWI_bm | PR_USART0_bm | PR_SPI_bm | PR_HIRES_bm;
+    PR.PRPC = PR_TWI_bm | PR_USART0_bm | PR_SPI_bm;
     PR.PRPD = PR_TWI_bm | PR_SPI_bm | PR_HIRES_bm;
 
     start_dac();
