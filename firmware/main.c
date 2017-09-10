@@ -42,18 +42,7 @@ int main(void)
     WRITE_PIN(POT_EN, true);
     select_pot();
 
-    struct button_state state = { true, false, 0 };
-
     for (;;) {
-        button_cycle(&state);
-
-        int16_t volpot = adc_convert();
-        if (volpot >= 0) {
-            set_audio_volume(volpot / 256);
-        }
-
-        _delay_ms(50);
-
         if (!READ_PIN(SW_OFF)) {
             enter_sleep();
         }
@@ -64,7 +53,7 @@ int main(void)
 
 static void button_cycle(struct button_state * state)
 {
-    const uint16_t debounce_top = 2u;
+    const uint16_t debounce_top = 100u;
     bool button = READ_PIN(SW_RANGE);
 
     if (state->pre_act) {
@@ -94,4 +83,24 @@ static void button_cycle(struct button_state * state)
 static void button_action(void)
 {
     step_current_range();
+}
+
+void adc_callback(int16_t signal_amp, uint8_t volume)
+{
+    volatile int16_t a = signal_amp;
+    volatile uint8_t b = volume;
+
+    static struct button_state state = { true, false, 0 };
+    button_cycle(&state);
+
+    if (volume != UINT8_MAX) {
+        set_audio_volume(volume / 256);
+    }
+
+    if (signal_amp != INT16_MAX) {
+        set_audio_freq(signal_amp/2 + 220);
+    }
+
+    (void) a;
+    (void) b;
 }
