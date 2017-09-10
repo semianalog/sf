@@ -1643,4 +1643,6 @@ Wire Wire Line
 Wire Wire Line
 	6200 1400 6300 1400
 Connection ~ 6300 1400
+Text Notes 6600 6900 0    60   ~ 0
+CHANGE FOR REV B:\n\n- Quieter inductor\n- ADC reference is VCC/1.6, account for that in volpot\n- Volume pot sucks
 $EndSCHEMATC
