@@ -33,3 +33,15 @@ int16_t adc_convert(void)
 
     return ADCA.CH0RES;
 }
+
+int16_t adc_convert_triggered(void)
+{
+    ADCA.INTFLAGS = ADC_CH0IF_bm;
+    ADCA.EVCTRL = ADC_EVSEL_0_gc | ADC_EVACT_CH0_gc;
+
+    while (!(ADCA.INTFLAGS & ADC_CH0IF_bm));
+    int16_t res = ADCA.CH0RES;
+    ADCA.EVCTRL = 0;
+
+    return res;
+}

@@ -13,7 +13,10 @@ void start_current_source(void)
     uint16_t const per = F_CPU / 1775uLL; // 2.5kHz
     TCD5.PER = per;
     TCD5.CCA = 650;
+    TCD5.CCB = 1000;
     TCD5.CTRLA = TC45_CLKSEL_DIV1_gc;
+
+    EVSYS.CH0MUX = EVSYS_CHMUX_TCD5_CCB_gc;
 }
 
 void stop_current_source(void)
