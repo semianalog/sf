@@ -1643,6 +1643,6 @@ Wire Wire Line
 Wire Wire Line
 	6200 1400 6300 1400
 Connection ~ 6300 1400
-Text Notes 6600 6900 0    60   ~ 0
-CHANGE FOR REV B:\n\n- Quieter inductor\n- ADC reference is VCC/1.6, account for that in volpot\n- Volume pot sucks
+Text Notes 6300 7000 0    60   ~ 0
+CHANGE FOR REV B:\n\n- Quieter inductor\n- C0G 1.5nF capacitors\n- ADC reference is VCC/1.6, account for that in volpot\n- Volume pot sucks\n- Fix or remove gain selection\n- Fix excess output-input coupling\n- Series resistor on UART RX
 $EndSCHEMATC
