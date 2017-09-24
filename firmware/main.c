@@ -21,8 +21,6 @@ int main(void)
 {
     _delay_ms(1);
     init_pins();
-    sei();
-    PMIC.CTRL = PMIC_HILVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_LOLVLEN_bm;
 
     if (RST.STATUS & RST_PORF_bm) {
         RST.STATUS = RST_PORF_bm; // clear flag for later
@@ -45,6 +43,10 @@ int main(void)
 
     WRITE_PIN(POT_EN, true);
     select_pot();
+
+    ADCA.EVCTRL = ADC_EVSEL_0_gc | ADC_EVACT_CH0_gc;
+    PMIC.CTRL = PMIC_HILVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_LOLVLEN_bm;
+    sei();
 
     for (;;) {
         if (!READ_PIN(SW_OFF)) {
@@ -99,6 +101,7 @@ void adc_callback(int16_t signal_amp, uint8_t volume)
 
     // Output value direct to PWM for debug
     uint32_t pwmval = (uint32_t) TMR_AUDIO_PWM.PER * (uint32_t) signal_amp / 0xfffuLL;
+    pwmval = 10;
     CC_AUDIO_PWM_1 = pwmval;
     CC_AUDIO_PWM_2 = pwmval;
     return;

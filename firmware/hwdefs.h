@@ -62,7 +62,7 @@
 //                              DEFAULT
 //                                      PINCTRL
 #define PIN_TABLE \
-X(PA0,          0,  0,  false,  false,  PORT_OPC_PULLUP_gc) /* unused */ \
+X(PA0,          0,  0,  true,   false,  PORT_OPC_TOTEM_gc) /* unused */ \
 X(SIGNAL,       0,  1,  false,  false,  PORT_ISC_INPUT_DISABLE_gc) /* ADC: 1 */ \
 X(ISENSE,       0,  2,  false,  false,  PORT_ISC_INPUT_DISABLE_gc) /* Comparator */ \
 X(BIAS_OUT,     0,  3,  false,  false,  PORT_ISC_INPUT_DISABLE_gc) /* DAC: 1 */ \

@@ -1,5 +1,6 @@
 #include "adc.h"
 #include "hwdefs.h"
+#include "gpio.h"
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include <util/atomic.h>
@@ -28,6 +29,7 @@ void init_adc(void)
     ADCA.CH0.CTRL = ADC_CH_GAIN_1X_gc | ADC_CH_INPUTMODE_DIFFWGAINH_gc;
 
     ADCA.CH0.INTCTRL = ADC_CH_INTMODE_COMPLETE_gc | ADC_CH_INTLVL_LO_gc;
+    ADCA.INTFLAGS = ADC_CH0IF_bm;
     ADCA.CTRLA = ADC_ENABLE_bm;
 }
 
@@ -108,6 +110,8 @@ static uint8_t process_volume(
 
 ISR(ADCA_CH0_vect)
 {
+    WRITE_PIN(PA0, true);
+    WRITE_PIN(PA0, false);
     // Quadrature sampling to remove phase offset. To get amplitude of the
     // actual signal, use (sample_ph0 ^2 + sample_ph90 ^2)
     const uint16_t sample_offset_ph0 = 1000;
