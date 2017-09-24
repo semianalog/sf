@@ -39,6 +39,10 @@ int main(void)
     enter_run();
     init_audio();
     init_adc();
+
+    // Disable audio sample inerrupt to allow debug PWM output
+    //TMR_AUDIO_SAMPLE.INTCTRLA = 0;
+
     WRITE_PIN(POT_EN, true);
     select_pot();
 
@@ -92,6 +96,12 @@ void adc_callback(int16_t signal_amp, uint8_t volume)
 
     static struct button_state state = { true, false, 0 };
     button_cycle(&state);
+
+    // Output value direct to PWM for debug
+    uint32_t pwmval = (uint32_t) TMR_AUDIO_PWM.PER * (uint32_t) signal_amp / 0xfffuLL;
+    CC_AUDIO_PWM_1 = pwmval;
+    CC_AUDIO_PWM_2 = pwmval;
+    return;
 
     if (volume != UINT8_MAX) {
         set_audio_volume(volume / 256);
