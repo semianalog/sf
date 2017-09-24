@@ -25,6 +25,8 @@ int main(void)
     if (RST.STATUS & RST_PORF_bm) {
         RST.STATUS = RST_PORF_bm; // clear flag for later
         // If reset reason was POR, we should go straight into sleep
+        PMIC.CTRL = PMIC_HILVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_LOLVLEN_bm;
+        sei();
         enter_sleep();  // no return
     }
 
